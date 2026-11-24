@@ -8,11 +8,17 @@ const mysql = require('mysql2');//Mysql
 //Token
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+//Leaflet
+const path = require('path');
+const cors = require('cors');
 
 app.use(cookieParser());
 app.use(express.static('html')); //Selection du dossier html
+app.use(cors());
 app.use(express.json()); //Sert a utiliser json
 
+
+console.log("user : " + process.env.DB_USER);
 //Connexion a la base de donner
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -28,10 +34,20 @@ connection.connect((err) => {
   console.log('Connecté à la base de données MySQL.');
 });
 
+// Gestion de la route pour le fichier index.js
+app.get('/index.js', (req, res) => { res.sendFile("index.js", { root: path.join(__dirname, "html") }); });
+app.get('/leaflet/leaflet.js', (req, res) => { res.sendFile("leaflet.js", { root: path.join(__dirname, "leaflet") }); });
+app.get('/leaflet/leaflet.css', (req, res) => { res.sendFile("leaflet.css", { root: path.join(__dirname, "leaflet") }); });
+app.get('/', (req, res) => {
+	res.sendFile("index.html", { root: path.join(__dirname, "html") });
+});
+
 //Lire sur le port 3000
 app.listen(3000, () => {
   console.log('Server is running on :3000');
 })
+
+
 
 //Gestion Inscription Utilisateur
 app.post('/inscription', (req, res) => {
@@ -83,9 +99,6 @@ app.post('/inscription', (req, res) => {
             console.log('Erreur Insertion dans la base ' + err);
             res.status(500).json({ message: 'Erreur bdd insertion', erreur: err });
             return;
-          }
-          if (rows.length > 0) {
-            return res.status(409).json({ message: 'Ce login est déjà utilisé' });
           }
           console.log('Insertion réussi');
           res.json({ message: 'Inscription reussie !' });

@@ -6,9 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hélaclès</title>
     <link rel="stylesheet" href="style.css">
+    
+	<link rel="stylesheet" href="../leaflet/leaflet.css" integrity="LgIYMKYZYdkXJ0V3DHdQ4a/JMhG6rl6UtQnWXHKY/mI=" crossorigin=""/>
+	<script type="importmap">
+		{
+			"imports": {
+				"leaflet": "../leaflet/leaflet.js"
+			}
+		}
+	</script>
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		.leaflet-container {
+			height: 100%;
+		}
+	</style>
 </head>
 
 <body>
+    
+    
     <!-- HEADER -->
     <header>
         <div id="heracles">
@@ -22,12 +42,13 @@
             </ul>
         </nav> -->
     </header>
-
     <!-- FORMUMLAIRE INSCRIPTION -->
     <div id="panel">
         <div id="panel-left">
             <img src="" alt="">
         </div>
+        
+        
         <div id="form">
 
             <div id="form-connexion">
@@ -69,6 +90,10 @@
         <h3>Modifier le mot de passe</h3>
         <input type="password" name="password" id="input-modifier-password">
         <input type="button" value="Modifier" id="modifier-btn">
+        
+        <div id='map'></div>
+
+        <script type="module" src="index.js"></script>
     </div>
 
     <div id="panel-users">
