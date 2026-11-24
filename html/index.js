@@ -1,12 +1,18 @@
-import {LeafletMap, TileLayer, Marker, Polyline, Polygon, Popup} from 'leaflet';
-const map = new LeafletMap('map').setView([50.419456, 1.575165], 11);
+import { LeafletMap, TileLayer, Marker, Polyline, Popup } from 'leaflet';
 
-const tiles = new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const mapEl = document.getElementById('map');
+const map = new LeafletMap(mapEl).setView([50.419456, 1.575165], 11);
+
+new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-const points = [
+// #acceuil est masqué (display: none) tant que l'utilisateur n'est pas connecté :
+// Leaflet mesure alors une taille de 0. On recalcule dès que #map change de taille.
+new ResizeObserver(() => map.invalidateSize()).observe(mapEl);
+
+const rawPoints = [
 	[5022.5107, 160.3967],
 	[5023.6107, 158.7015],
 	[5025.1861, 156.6503],
@@ -33,18 +39,17 @@ const points = [
 	[5056.4056, 157.8373]
 ];
 
-for (var i = 0; i < points.length; i++) {
-	points[i][0] /= 100;
-	points[i][1] /= 100;
-	const marker = new Marker([points[i][0], points[i][1]]).addTo(map);
-}
+// Conversion en nouveau tableau (on ne modifie pas rawPoints)
+const points = rawPoints.map(([lat, lng]) => [lat / 100, lng / 100]);
 
-for (var i = 0; i < points.length - 1; i++) {
-	const polyline = new Polyline([
-		[points[i][0], points[i][1]],
-		[points[i+1][0], points[i+1][1]]
-	]).addTo(map);
-}
+// Marqueurs
+points.forEach(p => new Marker(p).addTo(map));
+
+// Une seule polyligne pour tout le tracé
+const line = new Polyline(points).addTo(map);
+
+// Cadre la vue sur le tracé
+map.fitBounds(line.getBounds());
 
 function onMapClick(e) {
 	new Popup()

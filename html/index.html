@@ -6,49 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hélaclès</title>
     <link rel="stylesheet" href="style.css">
-    
-	<link rel="stylesheet" href="../leaflet/leaflet.css" integrity="LgIYMKYZYdkXJ0V3DHdQ4a/JMhG6rl6UtQnWXHKY/mI=" crossorigin=""/>
-	<script type="importmap">
-		{
-			"imports": {
-				"leaflet": "../leaflet/leaflet.js"
-			}
-		}
-	</script>
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
-		.leaflet-container {
-			height: 100%;
-		}
-	</style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.5/dist/leaflet.css"
+        integrity="sha256-LJzbbQFquR1Trwrwy++9x2Pl6ipfBZUR8Da0GGJ8Wfo=" crossorigin="" />
+    <script type="importmap">
+    {
+        "imports": {
+            "leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.5/dist/leaflet.js"
+        },
+        "integrity": {
+            "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.5/dist/leaflet.js": "sha256-wtAeAyJwpxq8jkj3LfBxdh3sPS3xw9kViJv+AtdXLDE="
+        }
+    }
+    </script>
+    <style>
+        /* La carte a besoin d'une hauteur explicite */
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-    
-    
+
     <!-- HEADER -->
     <header>
         <div id="heracles">
             <h1>Héraclès</h1>
         </div>
-        <!-- <nav>
-            <ul>
-                <li id="nav-connexion">Connexion</li>
-                <li id="nav-inscription">Inscription</li>
-                <li id="nav-deconnexion">Déconnexion</li>
-            </ul>
-        </nav> -->
     </header>
-    <!-- FORMUMLAIRE INSCRIPTION -->
+
+    <!-- FORMULAIRE INSCRIPTION -->
     <div id="panel">
         <div id="panel-left">
             <img src="" alt="">
         </div>
-        
-        
+
         <div id="form">
 
             <div id="form-connexion">
@@ -90,19 +84,18 @@
         <h3>Modifier le mot de passe</h3>
         <input type="password" name="password" id="input-modifier-password">
         <input type="button" value="Modifier" id="modifier-btn">
-        
-        <div id='map'></div>
 
+        <div id="map"></div>
+        <!-- Leaflet est chargé uniquement via l'importmap (module) -->
         <script type="module" src="index.js"></script>
     </div>
 
     <div id="panel-users">
         <h2>Liste des utilisateurs</h2>
         <ul id="users">
-            
+
         </ul>
     </div>
-
 
     <script src="script.js"></script>
 </body>
