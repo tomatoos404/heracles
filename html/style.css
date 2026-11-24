@@ -90,10 +90,10 @@ input {
     justify-content: center;
 }
 
-#map{
-    width: 80%;
-
+.mapclass{
+    margin: 50px;
 }
+
 
 
 @media (min-width : 992px) {
